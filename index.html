@@ -53,20 +53,25 @@
             function getGeolocation() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
-                        (position) => fetchMeteoWeather(position.coords.latitude, position.coords.longitude),
-                        () => {
-                            fetch("https://ipapi.co/json/")
-                                .then(response => response.json())
-                                .then(data => fetchMeteoWeather(data.latitude, data.longitude, data.city, data.region))
-                                .catch(() => {
-                                    weatherContainer.innerHTML = `<p class="text-danger">Could not determine location.</p>`;
-                                });
-                        }
-                    );
-                } else {
-                    weatherContainer.innerHTML = `<p class="text-danger">Geolocation is not supported by this browser.</p>`;
-                }
+                    (position) => {
+                // Using Geolocation, but we don't get city/region, so default to "Your Location"
+                fetchMeteoWeather(position.coords.latitude, position.coords.longitude, "Your Location", "Unknown");
+                },
+                () => {
+                // If geolocation fails, use IP-based location
+                fetch("https://ipapi.co/json/")
+                    .then(response => response.json())
+                    .then(data => fetchMeteoWeather(data.latitude, data.longitude, data.city, data.region))
+                    .catch(() => {
+                        weatherContainer.innerHTML = `<p class="text-danger">Could not determine location.</p>`;
+                    });
             }
+        );
+    } else {
+        weatherContainer.innerHTML = `<p class="text-danger">Geolocation is not supported by this browser.</p>`;
+    }
+}
+
 
             getGeolocation();
         });
