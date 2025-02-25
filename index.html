@@ -17,10 +17,9 @@
         <button class="btn btn-primary mt-3" onclick="location.reload()" style="display:flex; border-radius: 10px;" aria-label="Refresh Location Data">
             <img src="images/arrow-clockwise.svg" alt="Refresh" style="width: 20px; height: 20px; margin-right: 5px; filter: invert(1);"> Refresh
         </button>
-    </div>
-    
+    </div>  
     <div id="weather-container" class="mt-2">Loading weather...</div>
-
+    
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const weatherContainer = document.getElementById("weather-container");
@@ -73,7 +72,6 @@
                     const weatherCode = data.current.weather_code;
                     const [weatherText, weatherImage] = getWeatherDescription(weatherCode);
 
-                    // Icons
                     const temperatureImage = "thermometer.svg";
                     const humidityImage = "droplet-fill.svg";
                     const feelsLikeImage = "thermometer-half.svg";
@@ -81,17 +79,17 @@
                     const windSpeedImage = "wind.svg";
 
                     weatherContainer.innerHTML = `
-                        <div class="card weather-card col-12 mt-2 mb-4 shadow-lg" style="border-radius: 10px">
-                            <h3 class="mt-3 mb-3">Current Weather for ${city}, ${region}:</h3>
-                            <p><img src="images/${weatherImage}" alt="${weatherText}" style="width: 50px; height: 50px;"> ${weatherText}</p>
-                            <p><img src="images/${temperatureImage}" alt="Temperature" style="width: 30px; height: 30px;"> Temperature: ${data.current.temperature_2m}°F</p>
-                            <p><img src="images/${humidityImage}" alt="Humidity" style="width: 30px; height: 30px;"> Humidity: ${data.current.relative_humidity_2m}%</p>
-                            <p><img src="images/${feelsLikeImage}" alt="Feels Like" style="width: 30px; height: 30px;"> Feels Like: ${data.current.apparent_temperature}°F</p>
-                            <p><img src="images/${precipitationImage}" alt="Precipitation" style="width: 30px; height: 30px;"> Precipitation: ${data.current.precipitation} in</p>
-                            <p><img src="images/${windSpeedImage}" alt="Wind Speed" style="width: 30px; height: 30px;"> Wind Speed: ${data.current.wind_speed_10m} mph</p>
+                        <div class="card weather-card col-12 mt-2 mb-4 shadow-lg" style="border-radius: 10px" aria-label="Current Weather Info">
+                            <h3 aria-label"Here is the current weather for ${city}, ${region}:" class="mt-3 mb-3">Current Weather for ${city}, ${region}:</h3>
+                            <p aria-label="Current Weather Condition: ${weatherText}"><img src="images/${weatherImage}" alt="Current Weather Condition Icon" style="width: 50px; height: 50px;"> ${weatherText}</p>
+                            <p aria-label="Current Temperature: ${data.current.temperature_2m} Degrees Fahrenheit"><img src="images/${temperatureImage}" alt="Temperature Icon" style="width: 30px; height: 30px;"> Temperature: ${data.current.temperature_2m}°F</p>
+                            <p aria-label="Current Humidity: ${data.current.relative_humidity_2m}%"><img src="images/${humidityImage}" alt="Humidity Icon" style="width: 30px; height: 30px;"> Humidity: ${data.current.relative_humidity_2m}%</p>
+                            <p aria-label="Current Feels-like Temperature: ${data.current.apparent_temperature} Degrees Fahrenheit"><img src="images/${feelsLikeImage}" alt="Feels Like Icon" style="width: 30px; height: 30px;"> Feels Like: ${data.current.apparent_temperature}°F</p>
+                            <p aria-label="Current Precipitation: ${data.current.precipitation} inches"><img src="images/${precipitationImage}" alt="Precipitation Icon" style="width: 30px; height: 30px;"> Precipitation: ${data.current.precipitation} in</p>
+                            <p aria-label="Current Wind Speed: ${data.current.wind_speed_10m} miles per hour"><img src="images/${windSpeedImage}" alt="Wind Speed Icon" style="width: 30px; height: 30px;"> Wind Speed: ${data.current.wind_speed_10m} mph</p>
                         </div>`;
                 } catch (error) {
-                    weatherContainer.innerHTML = `<p class="text-danger">Failed to fetch weather data.</p>`;
+                    weatherContainer.innerHTML = `<p aria-label="Weather Retrieval Error" class="text-danger">Failed to fetch weather data.</p>`;
                 }
             }
 
